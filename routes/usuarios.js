@@ -2,6 +2,8 @@
 
 const router = require('express').Router();
 const Usuario = require('../models/usuarios');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const {
   validadorDeRegistro,
   validadorDeSesion
@@ -57,17 +59,18 @@ router.post('/usreg', async (req, res) => {
     direccion: req.body.direccion,
     fecha: req.body.fecha
   });
-  console.log(usuario);
+  console.log(claveDeUsuario);
   try {
     const salvarUsuario = await usuario.save();
     res.send({
-      usuario: usuario._id
+      claveDeUsuario
     });
   } catch (err) {
     res.status(400).send(err);
   }
   console.log('Registrado');
 });
+
 //TODO //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Inicio de Sesion///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 router.post('/uslog', async (req, res) => {
@@ -75,7 +78,7 @@ router.post('/uslog', async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   //? ////////////////////////////////validador si el usuario existe////////////////////////////////////
-
+    
   const usuario = await Usuario.findOne({
     claveDeUsuario: req.body.claveDeUsuario
   });
@@ -92,6 +95,6 @@ router.post('/uslog', async (req, res) => {
   //? crear y asignar una ficha
 
   const ficha = jwt.sign({ _id: usuario._id }, process.env.TOKEN_SECRET);
-  res.header('auth-token', ficha).send(ficha);
+  res.header('auth-token', ficha).send('Inicio De Sesion Exitoso');
 });
 module.exports = router;
