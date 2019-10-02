@@ -5,17 +5,17 @@ const Stock = require('../models/libros');
 //!Post
 router.post('/', async (req, res) => {
   const Libro = new Stock({
-    Titulo: req.body.Titulo,
-    Autor: req.body.Autor,
-    ISBN: req.body.ISBN,
-    Categoria: req.body.Categoria,
-    FechaDeLanzamiento: req.body.FechaDeLanzamiento,
-    Sipnosis: req.body.Sipnosis,
-    Formato: req.body.Formato,
-    Precio: req.body.Precio,
-    Formato: req.body.Formato,
-    PlatforOfSelling: req.body.PlatforOfSelling,
-    img: req.body.img
+    Titulo,
+    Autor,
+    ISBN,
+    Categoria,
+    FechaDeLanzamiento,
+    Sipnosis,
+    Formato,
+    Precio,
+    PlatforOfSelling,
+    img
+  } = req.body)
   });
   console.log(Libro);
   try {
